@@ -1,0 +1,64 @@
+<mat-form-field class="width: 100%">
+  <mat-label>Image sharing identifies</mat-label>
+  <input type="text" matInput [formControl]="idFormControl" placeholder="256348">
+  <mat-error *ngIf="!idFormControl.hasError('required')">
+    Please enter a valid identifier address
+  </mat-error>
+  <mat-error *ngIf="idFormControl.hasError('required')">
+    Identifier is <strong>required</strong>
+  </mat-error>
+</mat-form-field>
+
+<mat-form-field>
+  <div>
+    <mat-toolbar>
+      <input matInput [value]="selectedFileNames.length ? selectedFileNames.join(',') : 'Select Images'" />
+    </mat-toolbar>
+
+    <input
+      type="file"
+      id="fileInput"
+      name="fileInput"
+      accept="image/*" multiple
+      (change)="selectFiles($event)"
+    />
+  </div>
+</mat-form-field>
+
+<div class="div-flex">
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="!selectedFiles"
+    (click)="uploadFiles()"
+  >
+    Upload
+  </button>
+
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="this.idFormControl.getRawValue() === ''"
+    (click)="searchFiles()"
+  >
+    Search
+  </button>
+</div>
+
+<div>
+  <img *ngFor='let preview of previews' [src]="preview" class="preview">
+</div>
+
+<div *ngIf="message.length" class="message">
+  <ul *ngFor="let msg of message; let i = index">
+    <li>{{ msg }}</li>
+  </ul>
+</div>
+
+<div *ngIf="imageInfos$ | async; let images">
+  <h1>List of Images</h1>
+  <div *ngFor="let image of images.images" class="list-item">
+    <p matLine></p>
+    <img src="{{ image }}" class="preview"/>
+  </div>
+</div>
