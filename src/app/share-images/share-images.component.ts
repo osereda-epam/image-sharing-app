@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {filter, Observable, take} from "rxjs";
 import {FileUploadService} from "../services/file-upload.service";
 import {FormControl, Validators} from "@angular/forms";
-import {MatDialog} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {Image} from "../models/image";
 
 @Component({
@@ -22,7 +22,7 @@ export class ShareImagesComponent {
 
   idFormControl = new FormControl('', [Validators.required]);
 
-  constructor(private uploadService: FileUploadService, private dialog: MatDialog) {
+  constructor(private uploadService: FileUploadService, private snackBar: MatSnackBar) {
 
   }
 
@@ -52,10 +52,6 @@ export class ShareImagesComponent {
 
   uploadFiles(): void {
     const imageId = this.idFormControl.getRawValue();
-    if (imageId === '')
-    {
-      return;
-    }
 
     const image = {
       id: imageId,
@@ -63,14 +59,14 @@ export class ShareImagesComponent {
     };
 
     this.uploadService.create(image);
+
+    this.snackBar.open('Images uploaded', 'OK', {
+      duration: 2000,
+    });
   }
 
   searchFiles() {
     const imageId = this.idFormControl.getRawValue();
-    if (imageId === '')
-    {
-
-    }
     this.imageInfos$ = this.uploadService.getImages(imageId);
   }
 }

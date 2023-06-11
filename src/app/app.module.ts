@@ -15,10 +15,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatListModule} from "@angular/material/list";
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
-import {AngularFireModule} from "@angular/fire/compat";
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {getFirestore, provideFirestore} from "@angular/fire/firestore";
 
 const materialModules = [
@@ -29,7 +27,7 @@ const materialModules = [
   MatFormFieldModule,
   MatProgressBarModule,
   MatListModule,
-  MatDialogModule
+  MatSnackBarModule
 ];
 
 @NgModule({
